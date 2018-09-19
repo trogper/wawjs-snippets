@@ -1,0 +1,16 @@
+{
+  "name": "wawjs-snippets",
+  "version": "1.0.0",
+  "description": "Sublime JS snippets installed by npm",
+  "main": "index.js",
+  "scripts": {
+    "preinstall": "node scripts/preinstall.js",
+    "install": "node scripts/install.js",
+    "build": "node scripts/build.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fs-extra": "^7.0.0"
+  }
+}

@@ -1,0 +1,12 @@
+<snippet>
+                <tabTrigger>readFile</tabTrigger>
+                <scope>source.js</scope>
+                <description>wawjs - read text file</description>
+                <content><![CDATA[
+// path is relative to CWD
+// if path is fd it will not be closed
+fs.readFile(inPath, "UTF-8", (err, data) => {
+    if (err) throw err;
+
+});]]></content>
+            </snippet>
