@@ -1,31 +1,44 @@
 const os = require("os");
 const path = require("path");
 const fs = require("fs");
-const SUBLIME_HOME = require("./sublime-home.js")();
+const CSON = require('cson'); // TODO cson vs season (viac pouziti, issues), nasledne vysvetlit
+const ATOM_HOME = require("./atom-home.js")();
 
-const INSTALL_DIR = path.resolve(SUBLIME_HOME, "Packages/User/wawjs/");
-const SRC_DIR = path.resolve("./out/"); //what is "." in preinstall scripts ?
+const INSTALL_FILE = path.resolve(ATOM_HOME, "snippets.cson");
+const SRC_FILE = path.resolve("./out/atom/snippets.cson"); //what is "." in preinstall scripts ?
 
-fs.mkdir(INSTALL_DIR, (err) => {
-    if (err && err.code !== "EEXIST") throw err;
-    if (err && err.code === "EEXIST") {
-        fs.readdirSync(INSTALL_DIR)
-            .map((file) => path.resolve(INSTALL_DIR, file))
-            .forEach((file) => {
-                fs.unlinkSync(file);
-                console.error("deleted snippet:", file);
-            });
 
-    }
-    fs.readdir(SRC_DIR, (err, files) => {
+fs.readFile(INSTALL_FILE, "UTF-8", (err, txtData) => {
+    if (err) throw err;
+
+    // TODO transform stream na extract comments a remove comments
+    let comments = txtData
+        .split(/\r\n|\n|\r/)
+        .filter(l => l.indexOf('#') === 0);
+
+    let snippets = CSON.parse(txtData);
+
+    Object.keys(snippets).forEach(snipName => {
+        if (snippets[snipName].isWawjs)
+            delete snippets[snipName];
+    });
+
+    fs.readFile(SRC_FILE, "UTF-8", (err, newData) => {
         if (err) throw err;
-        files.forEach(file => {
-            const from = path.resolve(SRC_DIR, file);
-            const to = path.resolve(INSTALL_DIR, file);
-            fs.copyFile(from, to, (err) => {
-                if (err) throw err;
-                console.error("copied snippet:", to);
-            });
+
+        let newSnippets = CSON.parse(newData);
+
+        Object.entries(newSnippets).forEach(snip => {
+          snippets[snip[0]] = snip[1];
+        });
+
+        let csonData = CSON.stringify(snippets);
+
+        let data = comments.join('\n') + '\n\n' + csonData;
+
+        fs.writeFile(INSTALL_FILE, data, (err) => {
+            if (err) throw err;
+            console.error("snippets installed");
         });
     });
 });

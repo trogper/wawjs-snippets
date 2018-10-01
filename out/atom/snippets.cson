@@ -1,0 +1,51 @@
+".source.js":
+	"wawjs - read text file":
+		isWawjs: true
+		prefix: "readFile"
+		body: '''
+			// path is relative to CWD
+			// if path is fd it will not be closed
+			fs.readFile(inPath, "UTF-8", (err, data) => {
+			    if (err) throw err;
+			
+			});
+		'''
+	"wawjs - writing file":
+		isWawjs: true
+		prefix: "writeFile"
+		body: '''
+			// fs.writeFile(file, data[, options], callback)
+			// replacing the file if it already exists.
+			// data can be a string or a buffer.
+			// It is unsafe to use fs.writeFile() multiple times
+			// 	on the same file, without waiting for the callback
+			
+			fs.writeFile(outPath, outData, (err) => {
+			    if (err) throw err;
+			    console.error('written:', outPath);
+			});
+		'''
+	"wawjs - basic describe block with all methods":
+		isWawjs: true
+		prefix: "wawjs,describe"
+		body: '''
+			describe("//TODO:", function() {
+				it("//TODO:", function(done) {
+					done();
+				});
+				before(function(done) {
+					done();
+				});
+				after(function(done) {
+					done();
+				});
+				beforeEach(function(done) {
+					done();
+				});
+				afterEach(function(done) {
+					// check tests result, useful for different after actions based on test success or failure
+					// var state = this.currentTest.state; //"failed","passed"
+					done();
+				});
+			});
+		'''
