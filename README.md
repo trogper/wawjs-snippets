@@ -9,24 +9,24 @@ Distributing and installing Snippets for:
 	- mocha
 	- ...
 - for editors
-	- Sublime Text 3
+	- Atom
 	- ...
 
 ## Installing
 
-	npm install https://github.com/ainthek/wawjs-snippets.git
+	npm install https://github.com/trogper/wawjs-snippets.git
 
-This will create 
+This will create
 
-	$HOME/$SUMLIME/wawjs/*.sublime-snippet files	
+	$HOME/$ATOM/snippets.cson snippets
 
 ## Development
 
 Clone repo
 	
-	https://github.com/ainthek/wawjs-snippets.git
+	https://github.com/trogper/wawjs-snippets.git
 
-Run 
+Run
 	
 	npm install
 
@@ -42,4 +42,3 @@ Then test
 
 	
 Then commit and PR.
-
